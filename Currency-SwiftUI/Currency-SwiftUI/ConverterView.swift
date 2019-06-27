@@ -61,7 +61,6 @@ struct ConverterView : View {
                 }.background(Color.blue).cornerRadius(5)
                 Text("To:").bold().color(.gray)
                 List {
-                    
                     // TODO: should filter out BaseCurrency from list
                     ForEach(userData.userCurrency) { currency in
                         	CurrencyItemView(currency: currency, baseAmount: doubleValue, isEditing: self.$isEditing).tapAction {

@@ -34,7 +34,7 @@ struct CurrencyItemView: View {
     var body: some View {
         let currency = self.currency
         let converstionRate = currency.rate / userData.baseCurrency.rate
-        let totalAmount = baseAmount * currency.rate
+        let totalAmount = baseAmount * ( userData.baseCurrency.rate / currency.rate)
 
         return HStack {
             if self.isEditing {
@@ -60,8 +60,8 @@ struct CurrencyItemView: View {
                     Text(currency.flag).font(.largeTitle)
                     // Code and name
                     VStack(alignment: .leading){
-                        Text(currency.code)
-                        Text(currency.name).color(.gray)
+                        Text(currency.code).font(.headline)
+                        Text(currency.name).font(.footnote).color(.gray)
                     }
                     Spacer()
                     // Amount and conversion

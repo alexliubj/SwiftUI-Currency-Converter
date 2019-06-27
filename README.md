@@ -5,7 +5,7 @@ Currency Converter project coded by SwiftUI and Swift5
 ## Features
 
 - [x] Implemented with SwiftUI
-- [x] Suports darkmode for sure
+- [x] Supports darkmode for sure
 - [x] SwiftUI + Network requeset
 - [x] Swift 5.1 new features
 

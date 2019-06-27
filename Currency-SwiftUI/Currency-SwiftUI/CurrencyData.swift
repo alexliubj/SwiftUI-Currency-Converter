@@ -1,9 +1,8 @@
 //
-//  ContentView.swift
+//  CurrencyData.swift
 //  Currency-SwiftUI
 //
-//  Created by Alex Liu on 2019-06-27.
-//
+//  Created by Alex Liu on 2019-06-20.
 //  Copyright © 2018 Alex Liu <alexliubo@gmail.com> All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,18 +23,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+import Foundation
 import SwiftUI
 
-struct ContentView : View {
-    var body: some View {
-        Text("Hello World")
+struct Currency: Equatable, Hashable, Codable, Identifiable{
+    let id: UUID
+    let name: String
+    
+    // This is a rate to USD
+    let rate: Double
+    let symbol: String
+    let code: String
+    
+    init(name: String, rate: Double, symbol: String = "", code: String) {
+        self.id = UUID()
+        self.name = name
+        self.rate = rate
+        self.symbol = symbol
+        self.code = code
+    }
+    
+    // Get unicode flag by currency symbol
+    var flag: String {
+        // Hard-code EU for now
+        if self.symbol == "EU" { return "🇪🇺" }
+        let base : UInt32 = 127397
+        var s = ""
+        for v in self.symbol.uppercased().unicodeScalars {
+            s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
+        }
+        
+        return s
     }
 }
 
-#if DEBUG
-struct ContentView_Previews : PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-#endif

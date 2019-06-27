@@ -1,8 +1,8 @@
 //
-//  Currency_SwiftUIUITests.swift
-//  Currency-SwiftUIUITests
+//  AddCurrencyView.swift
+//  Currency-SwiftUI
 //
-//  Created by Alex Liu on 2019-06-27.
+//  Created by Alex Liu on 2019-06-20.
 //  Copyright © 2018 Alex Liu <alexliubo@gmail.com> All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,29 +23,40 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import XCTest
+import Foundation
+import SwiftUI
 
-class Currency_SwiftUIUITests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+struct AddCurrencyView : View {
+    @EnvironmentObject var userData: UserData
+    
+    var body: some View {
+        List {
+            ForEach(userData.allCurrencies) { currency in
+                return HStack {
+                    Button(action: { self.select(currency) }) {
+                        Text("\(currency.code) - \(currency.name)")
+                    }
+                    Spacer()
+                    if self.isSelected(currency) {
+                        Image(systemName: "checkmark").foregroundColor(.blue)
+                    }
+                }
+            }
+            }.navigationBarItem(title: Text("Add Currency"))
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    private func select(_ currency: Currency) {
+        if userData.userCurrency.map({ $0.code }).contains(currency.code) {
+            userData.userCurrency.removeAll{$0.code == currency.code}
+        }
+        else {
+            userData.userCurrency.append(currency)
+        }
     }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    private func isSelected(_ currency: Currency) -> Bool {
+        return userData.userCurrency.map({ $0.code }).contains(currency.code)
     }
-
 }
+
+

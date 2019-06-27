@@ -33,8 +33,8 @@ struct CurrencyItemView: View {
     
     var body: some View {
         let currency = self.currency
-        let converstionRate = currency.rate / userData.baseCurrency.rate
-        let totalAmount = baseAmount * ( userData.baseCurrency.rate / currency.rate)
+        let converstionRate = String(format: "%.4f", currency.rate / userData.baseCurrency.rate)
+        let totalAmount = String(format: "%.3f", baseAmount * ( userData.baseCurrency.rate / currency.rate))
 
         return HStack {
             if self.isEditing {
